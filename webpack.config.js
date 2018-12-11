@@ -3,19 +3,22 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: {
+        home: path.resolve(__dirname, "src/pages/home/index.tsx")
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js"
+        filename: "scripts/[name].js",
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json']
+        extensions: ['.ts', '.tsx', '.js', '.json'],
+        modules: ["node_modules", "src", "pages", "components"]
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'kim147',
-            template: './src/index.html',
+            filename: "home.html",
+            template: path.resolve(__dirname, 'src/pages/home/index.html'),
         })
     ],
     module: {
@@ -36,6 +39,11 @@ module.exports = {
                 use: ['ts-loader']
             }
         ]
+    },
+    devServer: {
+        port: 9999,
+        historyApiFallback: true,
+        index: "home.html"
     },
     // 启用sourceMap
     devtool: "source-map",
