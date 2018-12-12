@@ -1,6 +1,23 @@
+import "./styles/normal.sass"
+
 import React from 'react';
 import ReactDOM from "react-dom";
 
-import Ant from "components/ant";
+import Header from "./modules/header";
 
-ReactDOM.render(<Ant name="Kim" company="Unistar"/>, document.getElementById("home"));
+import Data from "models/data.json";
+
+import { ICategoryListItem } from "./modules/header";
+
+console.log(Data);
+
+const Home: React.SFC<{}> = () => {
+    return (
+        <React.Fragment>
+            <Header list={Data.result.categoryList as ICategoryListItem[]}></Header>
+        </React.Fragment>
+    )
+}
+
+
+ReactDOM.render(<Home />, document.getElementById("home"));
