@@ -11,7 +11,7 @@ console.log(Data);
 const Home: React.SFC<{}> = () => {
     return (
         <Fragment>
-            <Header list={Data.result.categoryList as Array<ICategoryListItem>}></Header>
+            <Header list={Data.result.categoryList as Array<ICategoryListItem>} />
         </Fragment>
     )
 }

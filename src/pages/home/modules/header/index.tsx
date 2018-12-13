@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import cx from "classnames";
+import PopupList, { IProps as IPopupListProps, IItem } from "components/PopupList";
+import Button from "components/Button";
 
 export interface ICategoryListItem {
     id: number,
@@ -16,7 +18,7 @@ interface IProps {
 interface IState {
     visibleList: Array<ICategoryListItem>,
     more: Array<ICategoryListItem>,
-    activeId: number
+    activeId: number | string
 }
 
 export default class Header extends Component<IProps, IState> {
@@ -32,9 +34,24 @@ export default class Header extends Component<IProps, IState> {
     render() {
         const {
             state: {
-                activeId
+                visibleList,
+                activeId,
+                more
             }
         } = this;
+
+        const popupListProps: IPopupListProps = {
+            list: more.map(item => {
+                const $IItem: IItem = {
+                    displayText: item.name,
+                    id: item.id
+                };
+                return $IItem;
+            }),
+            current: more.findIndex(item => item.id === activeId),
+            onChange: item => this.setState({ activeId: (item as IItem).id })
+        };
+
         return (
             <header className="top-header">
                 <nav>
@@ -42,7 +59,7 @@ export default class Header extends Component<IProps, IState> {
                         <li className="logo">
                             <a>Line Today</a>
                         </li>
-                        {this.state.visibleList.map((category) => {
+                        {visibleList.map((category) => {
                             return (
                                 <li key={category.id} className={cx({ active: activeId === category.id })}>
                                     <a
@@ -52,9 +69,12 @@ export default class Header extends Component<IProps, IState> {
                                 </li>
                             )
                         })}
-                        <li className="more">
-                            More
-                        </li>
+                        <PopupList {...popupListProps}>
+                            <Button className="more">
+                                More
+                            </Button>
+                        </PopupList>
+
                     </ul>
                 </nav>
             </header>
