@@ -1,21 +1,18 @@
-import "./styles/normal.sass"
-
-import React from 'react';
-import ReactDOM from "react-dom";
-
-import Header from "./modules/header";
-
+import "./style.sass";
 import Data from "models/data.json";
 
-import { ICategoryListItem } from "./modules/header";
+import React, { Fragment } from 'react';
+import ReactDOM from "react-dom";
+
+import Header, { ICategoryListItem } from "./modules/header";
 
 console.log(Data);
 
 const Home: React.SFC<{}> = () => {
     return (
-        <React.Fragment>
-            <Header list={Data.result.categoryList as ICategoryListItem[]}></Header>
-        </React.Fragment>
+        <Fragment>
+            <Header list={Data.result.categoryList as Array<ICategoryListItem>}></Header>
+        </Fragment>
     )
 }
 

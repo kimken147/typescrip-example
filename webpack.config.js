@@ -2,11 +2,16 @@ const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== "production"
+const devMode = process.env.NODE_ENV !== "production";
+
+const resolve = ($path) => {
+    return path.resolve(__dirname, $path);
+};
 
 module.exports = {
     entry: {
-        home: path.resolve(__dirname, "src/pages/home/index.tsx")
+        "common-styles": resolve("src/assets/styles/index.sass"),
+        home: resolve("src/pages/home/index.tsx")
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -44,7 +49,8 @@ module.exports = {
                 use: [{
                     loader: MiniCssExtractPlugin.loader,
                     options: {
-                        fallback: "style-loader"
+                        fallback: "style-loader",
+                        sourceMap: true
                     }
                 }, {
                     loader: "css-loader",
