@@ -55,7 +55,7 @@ export default class Header extends Component<IProps, IState> {
         return (
             <header className="top-header">
                 <nav>
-                    <ul>
+                    <ul className="nav-list">
                         <li className="logo">
                             <a>Line Today</a>
                         </li>
