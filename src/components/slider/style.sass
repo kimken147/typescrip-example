@@ -1,0 +1,50 @@
+.slider-wrapper
+    position: relative
+
+    .slider-container
+        position: relative
+        overflow: hidden
+        display: inline-block
+
+        .item
+            position: absolute
+            opacity: 0
+
+            &.active
+                opacity: 1
+
+    .slider-dot-wrapper
+        position: absolute
+        bottom: 20px
+        display: flex
+        justify-content: center
+
+        .dot
+            display: inline-block
+            width: 6px
+            height: 6px
+            border-radius: 100%
+            border: 1px solid #fff
+            background-color: transparent
+            margin-right: 8px
+            cursor: pointer
+
+            &.active
+                background: #fff
+
+    .arrow-wrapper
+        display: inline-flex
+        justify-content: space-between
+        position: absolute
+        left: 0
+
+        .left-arrow, .right-arrow
+            cursor: pointer
+
+        .left-arrow:hover, .right-arrow:hover
+            path:nth-of-type(1)
+                opacity: 1
+
+        path:nth-of-type(1)
+            fill: #e2e2e2
+            opacity: 0.5
