@@ -9,7 +9,6 @@ const Headline = memo(() => {
                 <Digest />
                 <NewsSection />
             </Suspense>
-
         </div>
     )
 })

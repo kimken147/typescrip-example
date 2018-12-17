@@ -1,9 +1,10 @@
-import React, { PureComponent, ReactElement } from 'react'
+import React, { PureComponent, ReactElement } from 'react';
 import cx from "classnames";
+import { LeftArrow, RightArrow } from "components/Icons";
 
 enum Direction {
-    Left = "Left",
-    Right = "Right"
+    left = "left",
+    right = "right"
 };
 
 type DirectionTypes = keyof typeof Direction;
@@ -28,7 +29,7 @@ interface IProps {
         enabled: boolean,
         size: number
     };
-    onSildeEnd: (index: number) => void;
+    onSildeEnd?: (index: number) => void;
 }
 
 interface IState {
@@ -45,7 +46,7 @@ export default class Slider extends PureComponent<IProps, IState> {
     state: Readonly<IState> = {
         current: 0,
         sliding: false,
-        direction: Direction.Left,
+        direction: Direction.left,
         prev: 0,
         interval: undefined
     }
@@ -53,7 +54,7 @@ export default class Slider extends PureComponent<IProps, IState> {
     static defaultProps = {
         styles: {
             width: 712,
-            heigth: 400
+            height: 400
         },
         time: 5000,
         arrow: {
@@ -85,7 +86,7 @@ export default class Slider extends PureComponent<IProps, IState> {
         if (sliding) return;
         const length = React.Children.count(children);
         const $next = current === length - 1 ? 0 : current + 1;
-        this.setState({ prev: current, current: $next, sliding: true, direction: Direction.Right });
+        this.setState({ prev: current, current: $next, sliding: true, direction: Direction.right });
     }
 
     prev = () => {
@@ -96,7 +97,7 @@ export default class Slider extends PureComponent<IProps, IState> {
         if (sliding) return;
         const length = React.Children.count(children);
         const $prev = current === 0 ? length - 1 : current - 1;
-        this.setState({ prev: current, current: $prev, sliding: true, direction: Direction.Left });
+        this.setState({ prev: current, current: $prev, sliding: true, direction: Direction.left });
     }
 
     goto(index: number) {
@@ -105,7 +106,7 @@ export default class Slider extends PureComponent<IProps, IState> {
         } = this;
         if (sliding) return;
         if (index === current) return;
-        const direction = index > current ? Direction.Right : Direction.Left;
+        const direction = index > current ? Direction.right : Direction.left;
         this.setState({ prev: current, current: index, sliding: true, direction });
     }
 
@@ -130,21 +131,26 @@ export default class Slider extends PureComponent<IProps, IState> {
                     {React.Children.map(this.props.children, (child, index) => {
                         let $styles: IStyles = {};
                         if (index === prev && sliding) {
-                            $styles.transform = `translateX(${direction === Direction.Left ? "" : "-"}100%)`;
+                            $styles.transform = `translateX(${direction === Direction.left ? "" : "-"}100%)`;
                             $styles.transition = `transform 0.5s`;
                             $styles.opacity = 1;
                         }
                         else if (index === current && sliding) {
-                            $styles.transform = `translateX(${direction === Direction.Left ? "" : "-"}100%)`;
+                            $styles.transform = `translateX(${direction === Direction.left ? "" : "-"}100%)`;
                             $styles[direction] = -styles.width
                             $styles.transition = `transform 0.5s`;
                         }
                         return (
                             <li
+                                key={index}
                                 className={cx("item", { active: index === current })}
                                 style={{ ...styles, ...$styles }} onTransitionEnd={() => {
                                     if (index === current) {
-                                        this.setState({ sliding: false }, () => this.props.onSildeEnd(index));
+                                        this.setState({ sliding: false }, () => {
+                                            if (this.props.onSildeEnd) {
+                                                this.props.onSildeEnd(index);
+                                            }
+                                        });
                                     }
                                 }}>
                                 {React.cloneElement(child as ReactElement<any>, {
@@ -161,16 +167,10 @@ export default class Slider extends PureComponent<IProps, IState> {
                 </div>
                 {arrow && <div className="arrow-wrapper" style={{ width: styles.width, top: `calc(50% - ${arrow.size / 2}px)` }}>
                     <div className="left-arrow" style={{ width: arrow.size, height: arrow.size }} onClick={this.prev}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width={arrow.size} height={arrow.size} viewBox={`0 0 ${arrow.size / 3} ${arrow.size / 3}`}>
-                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                            <path d="M0 0h24v24H0z" fill="none" />
-                        </svg>
+                        <LeftArrow width={arrow.size} height={arrow.size} scale={3} />
                     </div>
                     <div className="right-arrow" style={{ width: arrow.size, height: arrow.size }} onClick={this.next}>
-                        <svg xmlns="http://www.w3.org/2000/svg" style={{ width: arrow.size, height: arrow.size }} viewBox={`0 0 ${arrow.size / 3} ${arrow.size / 3}`}>
-                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                            <path d="M0 0h24v24H0z" fill="none" />
-                        </svg>
+                        <RightArrow width={arrow.size} height={arrow.size} scale={3} />
                     </div>
                 </div>}
 

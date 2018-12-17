@@ -12,7 +12,6 @@ export default class NewsSection extends PureComponent<{}> {
     constructor(props: {}) {
         super(props);
         this.fixNews = (Data.result.categories.find(item => item.id === 100259) as ICategory).templates;
-        console.log("-----", this.fixNews);
     }
 
     render() {
@@ -31,8 +30,8 @@ export default class NewsSection extends PureComponent<{}> {
                         return <div className="section-block" key={news.id}>
                             <h3>{news.title}</h3>
                             <article className="news-block">
-                                {main.map((article) => <Article {...article} key={article.id} className="main" imageUrl={`https://obs.line-scdn.net/${article.thumbnail.hash}/w580`} />)}
-                                {rest.map((article) => <Article {...article} key={article.id} className="sub" imageUrl={`https://obs.line-scdn.net/${article.thumbnail.hash}/w580`} />)}
+                                {main.map((article) => <Article {...article} key={article.id} className="main" />)}
+                                {rest.map((article) => <Article {...article} key={article.id} className="sub" />)}
                             </article>
                         </div>
                     }

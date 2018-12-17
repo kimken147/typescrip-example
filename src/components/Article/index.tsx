@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from "classnames";
+import { number } from 'prop-types';
 
 export interface IArticle {
     id: string | number,
@@ -18,7 +19,8 @@ export interface IArticle {
         url: string
     },
     className: string,
-    [propName: string]: any
+    size?: number,
+    [propName: string]: any,
 }
 
 
@@ -27,18 +29,23 @@ const News = (props: IArticle) => {
         href,
         title,
         publisher,
-        imageUrl
+        thumbnail,
+        size
     } = props;
 
     return (
         <a className={cx(props.className, "news")} href={href} title={title}>
-            <figure style={{backgroundImage: `url(${imageUrl}`}} />
+            <figure style={{ backgroundImage: `url(https://obs.line-scdn.net/${thumbnail.hash}/w${size}` }} />
             <div className="content">
                 <p>{title}</p>
-                {publisher ? <span>{publisher}</span>: null}
+                {publisher ? <span>{publisher}</span> : null}
             </div>
         </a>
     )
+}
+
+News.defaultProps = {
+    size: 580
 }
 
 export default News
