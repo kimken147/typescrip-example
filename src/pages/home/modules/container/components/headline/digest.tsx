@@ -17,7 +17,6 @@ export default class Digest extends PureComponent<{}>{
         this.state = {
             article: this.newsList[0]
         }
-        console.log(this.newsList);
     }
 
     onSlideEnd = (index: number) => {
@@ -25,7 +24,6 @@ export default class Digest extends PureComponent<{}>{
     }
 
     render() {
-
         const { article } = this.state;
 
         return (

@@ -147,9 +147,7 @@ export default class Slider extends PureComponent<IProps, IState> {
                                 style={{ ...styles, ...$styles }} onTransitionEnd={() => {
                                     if (index === current) {
                                         this.setState({ sliding: false }, () => {
-                                            if (this.props.onSildeEnd) {
-                                                this.props.onSildeEnd(index);
-                                            }
+                                            this.props.onSildeEnd && this.props.onSildeEnd(index);
                                         });
                                     }
                                 }}>
