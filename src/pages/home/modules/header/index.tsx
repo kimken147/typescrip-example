@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+
 import cx from "classnames";
+
+import { CategoryIdType } from "pages/home";
+import { StoreState, ActionCreators } from "pages/lineTodayRedux";
 import PopupList, { IProps as IPopupListProps, IItem } from "components/PopupList";
 import Button from "components/Button";
+
 
 export interface ICategoryListItem {
     id: number,
@@ -11,32 +18,38 @@ export interface ICategoryListItem {
         enable: boolean
     } | undefined
 }
-interface IProps {
-    list: Array<ICategoryListItem>
+interface OwnProps {
+    list: Array<ICategoryListItem>;
 }
 
-interface IState {
+interface StateProps {
+    categoryId: CategoryIdType;    
+}
+
+interface State {
     visibleList: Array<ICategoryListItem>,
     more: Array<ICategoryListItem>,
-    activeId: number | string
 }
 
-export default class Header extends Component<IProps, IState> {
-    constructor(props: IProps) {
+type Props = OwnProps & typeof ActionCreators & StateProps;
+
+class Header extends Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             visibleList: props.list.slice(0, 9),
             more: props.list.slice(9),
-            activeId: props.list[0].id
-        }
+        };
     }
 
     render() {
         const {
             state: {
                 visibleList,
-                activeId,
                 more
+            },
+            props: {
+                categoryId
             }
         } = this;
 
@@ -48,8 +61,11 @@ export default class Header extends Component<IProps, IState> {
                 };
                 return $IItem;
             }),
-            current: more.findIndex(item => item.id === activeId),
-            onChange: item => this.setState({ activeId: (item as IItem).id })
+            current: more.findIndex(item => item.id === categoryId),
+            onChange: $item => {
+                const item = $item as IItem;
+                this.props.setCategoryId(item.id);
+            }
         };
 
         return (
@@ -61,9 +77,9 @@ export default class Header extends Component<IProps, IState> {
                         </li>
                         {visibleList.map((category) => {
                             return (
-                                <li key={category.id} className={cx({ active: activeId === category.id })}>
+                                <li key={category.id} className={cx({ active: categoryId === category.id })}>
                                     <a
-                                        onClick={() => this.setState({ activeId: category.id })}>
+                                        onClick={() => this.props.setCategoryId(category.id)}>
                                         {category.name}
                                     </a>
                                 </li>
@@ -81,3 +97,15 @@ export default class Header extends Component<IProps, IState> {
         )
     }
 }
+
+const mapStateToProps = (state: StoreState): StateProps => {
+    return {
+        categoryId: state.categoryId
+    }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {    
+    return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect<StoreState, typeof ActionCreators, OwnProps, StateProps>(mapStateToProps, mapDispatchToProps)(Header)

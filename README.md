@@ -1,1 +1,1 @@
-# typescript-react-webpack-sample
+# typescript-react-example

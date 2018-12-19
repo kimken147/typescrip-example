@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import Data from "models/data.json";
 
-import Article from "components/Article";
-import { IArticle } from "components/Article";
+import Article, { IArticle } from "components/Article";
 import { ICategory, ITemplates } from "pages/home/modules/container";
 
 interface IState { currentNews: ITemplates[], length: number };
@@ -31,8 +30,8 @@ export default class NewsSection extends PureComponent<{}> {
                         return <div className="section-block" key={news.id}>
                             <h3>{news.title}</h3>
                             <article className="news-block">
-                                {main.map((article) => <Article {...article} key={article.id} className="main" lazyLoad />)}
-                                {rest.map((article) => <Article {...article} key={article.id} className="sub" lazyLoad />)}
+                                {main.map((article) => <Article {...article} key={article.id} className="main" figure={{ width: "100%", height: 185 }} lazyLoad />)}
+                                {rest.map((article) => <Article {...article} key={article.id} className="sub" figure={{ width: 140, height: 96 }} lazyLoad />)}
                             </article>
                         </div>
                     }

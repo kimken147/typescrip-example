@@ -1,22 +1,30 @@
 import "./style.sass";
 import Data from "models/data.json";
 
-import React, { Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from "react-dom";
+
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { reducers } from "pages/lineTodayRedux";
 
 import Header, { ICategoryListItem } from "./modules/header";
 import Container from "./modules/container";
 
+export type CategoryIdType = number | string;
+
+const store = createStore(reducers, (window as any).devToolsExtension ? (window as any).devToolsExtension(): () => {});
+
 console.log(Data);
-
-const Home: React.SFC<{}> = () => {
-    return (
-        <Fragment>
-            <Header list={Data.result.categoryList as Array<ICategoryListItem>} />
-            <Container></Container>
-        </Fragment>
-    )
+class Home extends PureComponent {
+    render() {
+        return (
+            <Provider store={store}>
+                <Header list={Data.result.categoryList as Array<ICategoryListItem>} />
+                <Container></Container>
+            </Provider>
+        )
+    }
 }
-
 
 ReactDOM.render(<Home />, document.getElementById("home"));

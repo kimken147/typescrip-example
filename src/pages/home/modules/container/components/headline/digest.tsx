@@ -19,7 +19,7 @@ export default class Digest extends PureComponent<{}>{
         }
     }
 
-    onSlideEnd = (index: number) => {
+    private onSlideEnd = (index: number) => {
         this.setState({ article: this.newsList[index]});
     }
 
@@ -30,7 +30,7 @@ export default class Digest extends PureComponent<{}>{
             <div className="headline-digest">
                 <Slider onSildeEnd={this.onSlideEnd}>
                     {this.newsList.map(news => {
-                        return <Article key={news.id} {...news} />;
+                        return <Article key={news.id} {...news} thumbnailSize={1200} figure={{width: "100%", height: "100%"}}/>;
                     })}
                 </Slider>
                 <a className="digest-detail">

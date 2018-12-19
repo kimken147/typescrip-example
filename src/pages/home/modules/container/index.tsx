@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react';
-import Headline from './components/headline';
+import React, { PureComponent, lazy, Suspense } from 'react';
 import { IArticle } from "components/Article";
+
+const Headline = lazy(() => import("./components/headline"));
 
 interface IBase {
     id: number | string,
@@ -23,11 +24,13 @@ export interface ICategory extends IBase {
     templates: Array<ITemplates>,
 }
 
-export default class Container extends PureComponent<{}> {
+export default class Container extends PureComponent {
     render() {
         return (
             <section className="container">
-                <Headline />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Headline />
+                </Suspense>
             </section>
         )
     }
