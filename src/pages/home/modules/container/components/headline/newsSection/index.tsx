@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
+import { createSelector } from "reselect";
 import Data from "models/data.json";
 
+import { StoreState } from "pages/lineTodayRedux";
 import Article, { IArticle } from "components/Article";
 import { ICategory, ITemplates } from "pages/home/modules/container";
 
 interface IState { currentNews: ITemplates[], length: number };
 
-export default class NewsSection extends PureComponent<{}> {
+class NewsSection extends PureComponent<{}> {
     fixNews: ITemplates[] = this.fixNews = (Data.result.categories.find(item => item.id === 100259) as ICategory).templates;
 
     state: Readonly<IState> = {
@@ -40,3 +42,5 @@ export default class NewsSection extends PureComponent<{}> {
         )
     }
 }
+
+export default NewsSection;

@@ -8,7 +8,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { reducers } from "pages/lineTodayRedux";
 
-import Header, { ICategoryListItem } from "./modules/header";
+import Header from "./modules/header";
 import Container from "./modules/container";
 
 export type CategoryIdType = number | string;
@@ -20,8 +20,8 @@ class Home extends PureComponent {
     render() {
         return (
             <Provider store={store}>
-                <Header list={Data.result.categoryList as Array<ICategoryListItem>} />
-                <Container></Container>
+                <Header />
+                <Container />
             </Provider>
         )
     }

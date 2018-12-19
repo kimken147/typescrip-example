@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import cx from "classnames";
 
 import { CategoryIdType } from "pages/home";
-import { StoreState, ActionCreators } from "pages/lineTodayRedux";
+import { StoreState, ActionCreators, CategoryList } from "pages/lineTodayRedux";
 import PopupList, { IProps as IPopupListProps, IItem } from "components/PopupList";
 import Button from "components/Button";
 
@@ -18,12 +18,9 @@ export interface ICategoryListItem {
         enable: boolean
     } | undefined
 }
-interface OwnProps {
-    list: Array<ICategoryListItem>;
-}
-
 interface StateProps {
-    categoryId: CategoryIdType;    
+    categoryId: CategoryIdType;
+    list: CategoryList
 }
 
 interface State {
@@ -31,15 +28,13 @@ interface State {
     more: Array<ICategoryListItem>,
 }
 
-type Props = OwnProps & typeof ActionCreators & StateProps;
+type Props = typeof ActionCreators & StateProps;
 
 class Header extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            visibleList: props.list.slice(0, 9),
-            more: props.list.slice(9),
-        };
+
+    state = {
+        visibleList: this.props.list.slice(0, 9),
+        more: this.props.list.slice(9),
     }
 
     render() {
@@ -100,7 +95,8 @@ class Header extends Component<Props, State> {
 
 const mapStateToProps = (state: StoreState): StateProps => {
     return {
-        categoryId: state.categoryId
+        categoryId: state.categoryId,
+        list: state.categoryList
     }
 };
 
@@ -108,4 +104,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(ActionCreators, dispatch);
 }
 
-export default connect<StoreState, typeof ActionCreators, OwnProps, StateProps>(mapStateToProps, mapDispatchToProps)(Header)
+export default connect<StateProps, typeof ActionCreators, {}, StoreState>(mapStateToProps, mapDispatchToProps)(Header)
