@@ -78,6 +78,11 @@ export default class Slider extends PureComponent<IProps, IState> {
         clearInterval(this.state.interval);
     }
 
+    resetTimer = () => {
+        clearInterval(this.state.interval);
+        this.setState({ interval: setInterval(this.next, this.props.time) });
+    }
+
     next = () => {
         const {
             props: { children },
@@ -148,6 +153,7 @@ export default class Slider extends PureComponent<IProps, IState> {
                                     if (index === current) {
                                         this.setState({ sliding: false }, () => {
                                             this.props.onSildeEnd && this.props.onSildeEnd(index);
+                                            this.resetTimer();
                                         });
                                     }
                                 }}>

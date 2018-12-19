@@ -14,10 +14,6 @@
                     width: 100%
                     height: 100%
 
-                    figure
-                        width: 100%
-                        height: 100%
-
         .digest-detail
             display: flex
             flex-direction: column
@@ -42,5 +38,13 @@
 
                 .publisher
                     color: #b2b2b2
+    .headline-section
+        display: flex
+        justify-content: space-between
+        align-items: flex-start
 
-    @import ./newsSection/style
+        @import ./newsSection/style
+        @import ../popularity/style
+
+        .popularity-container
+            margin-top: 100px

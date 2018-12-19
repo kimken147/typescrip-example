@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import cx from "classnames";
 import LazyLoad from "react-lazyload";
 export interface IArticle {
@@ -17,42 +17,57 @@ export interface IArticle {
         hash: string,
         url: string
     },
+    figure: {
+        width: number | string,
+        height: number | string
+    },
     className: string,
-    size?: number,
+    thumbnailSize?: number,
     lazyLoad?: boolean,
     [propName: string]: any,
 }
 
+class Aritcle extends PureComponent<IArticle> {
 
-const News = (props: IArticle) => {
-    const {
-        href,
-        title,
-        publisher,
-        thumbnail,
-        size,
-        lazyLoad
-    } = props;
+    static defaultProps = {
+        thumbnailSize: 580,
+        lazyLoad: false
+    }
 
-    return (
-        <a className={cx(props.className, "news")} href={href} title={title}>
-            {lazyLoad ?
-                <LazyLoad once>
-                    <figure style={{ backgroundImage: `url(https://obs.line-scdn.net/${thumbnail.hash}/w${size}` }} />
-                </LazyLoad> :
-                <figure style={{ backgroundImage: `url(https://obs.line-scdn.net/${thumbnail.hash}/w${size}` }} />
-            }
-            <div className="content">
-                <p>{title}</p>
-                {publisher ? <span>{publisher}</span> : null}
-            </div>
-        </a>
-    )
+    render() {
+        const {
+            href,
+            title,
+            publisher,
+            thumbnail,
+            thumbnailSize,
+            lazyLoad,
+            figure
+        } = this.props;
+
+        const figureComponent = <figure style={{
+            backgroundImage: `url(https://obs.line-scdn.net/${thumbnail.hash}/w${thumbnailSize}`,
+            width: figure.width,
+            height: figure.height
+        }}>;
+    
+        </figure>
+
+        return (
+            <a className={cx(this.props.className, "news")} href={href} title={title}>
+                {lazyLoad ?
+                    <LazyLoad once height={figure.height} >
+                        {figureComponent}
+                    </LazyLoad> :
+                    figureComponent
+                }
+                <div className="content">
+                    <p>{title}</p>
+                    {publisher ? <span>{publisher}</span> : null}
+                </div>
+            </a>
+        )
+    }
 }
 
-News.defaultProps = {
-    size: 580,
-    lazyLoad: false
-}
-
-export default News
+export default Aritcle
