@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
+import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import Data from "models/data.json";
 
 import { StoreState } from "pages/lineTodayRedux";
 import Article, { IArticle } from "components/Article";
@@ -8,11 +8,14 @@ import { ICategory, ITemplates } from "pages/home/modules/container";
 
 interface IState { currentNews: ITemplates[], length: number };
 
-class NewsSection extends PureComponent<{}> {
-    fixNews: ITemplates[] = this.fixNews = (Data.result.categories.find(item => item.id === 100259) as ICategory).templates;
+interface StateProps {
+    newsList: ITemplates[]
+}
 
-    state: Readonly<IState> = {
-        currentNews: this.fixNews,
+class NewsSection extends PureComponent<StateProps, IState> {
+
+    state = {
+        currentNews: this.props.newsList,
         length: 1
     };
 
@@ -43,4 +46,17 @@ class NewsSection extends PureComponent<{}> {
     }
 }
 
-export default NewsSection;
+const selector = createSelector(
+    (state: StoreState) => state.categories,
+    (categories) => {
+        return (categories.find(item => item.id === 100259) as ICategory).templates;
+    }
+)
+
+const mapStateToProps = (state: StoreState) => {
+    return {
+        newsList: selector(state)
+    }
+}
+
+export default connect<StateProps, {}, {}, StoreState>(mapStateToProps)(NewsSection);

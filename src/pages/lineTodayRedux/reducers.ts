@@ -13,7 +13,7 @@ export interface StoreState {
 const initialState: StoreState = {
     categoryId: Data.result.categoryList[0].id,
     categories: Data.result.categories,
-    categoryList: Data.result.categoryList
+    categoryList: Data.result.categoryList.filter(item => item.type !== 3 )
 };
 
 const reducers: Reducer<StoreState> = (state = initialState, actions) => {
@@ -28,16 +28,4 @@ const reducers: Reducer<StoreState> = (state = initialState, actions) => {
     }
 }
 
-// export function reducers(state = initialState, actions: IAction) {
-//     switch (actions.type) {
-//         case ActionTypes.SET_CATEOGORY_ID:
-//             return {
-//                 ...state,
-//                 categoryId: actions.categoryId
-//             }
-//         default:
-//             return state;
-//     }
-// }
-
-export { reducers }
+export default reducers

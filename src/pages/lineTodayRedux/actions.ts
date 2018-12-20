@@ -8,3 +8,5 @@ export const ActionCreators = {
     setCategoryId: (categoryId: CategoryIdType) => ({ type: ActionTypes.SET_CATEOGORY_ID, categoryId })
 }
 
+export type ActionCreatorsType = typeof ActionCreators;
+

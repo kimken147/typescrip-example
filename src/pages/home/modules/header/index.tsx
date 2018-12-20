@@ -102,6 +102,6 @@ const mapStateToProps = (state: StoreState): StateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {    
     return bindActionCreators(ActionCreators, dispatch);
-}
+};
 
 export default connect<StateProps, typeof ActionCreators, {}, StoreState>(mapStateToProps, mapDispatchToProps)(Header)

@@ -9,7 +9,7 @@ const Headline = memo(() => {
             <Digest />
             <section className="headline-section">
                 <NewsSection />
-                {/* <Popularity /> */}
+                <Popularity />
             </section>
         </div>
     )
