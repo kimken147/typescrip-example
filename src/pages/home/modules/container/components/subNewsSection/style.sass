@@ -1,0 +1,81 @@
+.sub-news-outter
+    display: flex
+    align-items: flex-start
+    justify-content: space-between
+    width: 1080px
+
+    .news-section
+        width: 712px
+
+        h1
+            font-size: 32px
+            font-weight: 700
+            margin: 30px 0 20px
+
+        .digest
+            position: relative
+
+            figure
+                height: 400px
+                width: 712px
+
+            .content
+                position: absolute
+                width: 712px
+                bottom: 27px
+                color: #fff
+                display: flex
+                flex-direction: column-reverse
+                padding-left: 40px
+                z-index: 1
+
+                p
+                    font-weight: 700
+                    color: #fff
+                    font-size: 24px
+
+                span
+                    margin: 10px 0
+
+            &:after
+                position: absolute
+                content: ""
+                display: block
+                bottom: 0
+                width: 712px
+                height: 180px
+                background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, rgba(0, 0, 0, 0.4))
+
+        .subpage-news
+            display: flex
+            align-items: center
+            justify-content: space-between
+            margin-top: 10px
+
+            .content
+                margin-left: 20px
+                width: 437px
+
+                p
+                    font-size: 18px
+                    margin-bottom: 5px
+
+                span
+                    font-size: 14px
+                    color: #b2b2b2
+
+        .other-news
+            margin-top: 60px
+
+            .news-section-block
+                margin-top: 50px
+
+                .news-section-title
+                    font-size: 20px
+                    font-weight: 700
+                    margin-bottom: 5px
+
+    @import ../popularity/style
+
+    .popularity-container
+        margin-top: 82px

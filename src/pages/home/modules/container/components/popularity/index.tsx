@@ -65,6 +65,23 @@ class Popularity extends PureComponent<StateProps, IState> {
         return null;
     }
 
+    componentDidMount() {
+        const current = this.props.categoryList.findIndex(item => item.id === this.state.categoryId);
+        if (current !== 0 && current !== 1) {
+            const target = this.lliDOM as HTMLElement;
+            const parent = target.parentElement as HTMLElement;
+            const distance = target.offsetLeft !== 0 ? (target.offsetLeft > parent.offsetLeft ?
+                target.offsetLeft - parent.offsetLeft :
+                target.offsetLeft) - target.offsetWidth : 0;
+            this.setState({
+                transitionStyle: {
+                    transform: `translateX(-${distance}px)`,
+                    transition: "transform 0.5s"
+                }
+            })
+        }  
+    }
+
     componentDidUpdate(prevProps: StateProps, prevState: IState) {
         if (prevState.categoryId !== this.state.categoryId) {
             const prev = this.props.categoryList.findIndex(item => item.id === prevState.categoryId);
@@ -137,14 +154,14 @@ class Popularity extends PureComponent<StateProps, IState> {
 
 const selector = createSelector(
     (state: StoreState) => state.categories,
-    (state: StoreState) => state.categoryId,
+    (state: StoreState) => state.category.id,
     (categories, categoryId) => getArticles(categories, categoryId)
 )
 
 const mapStateToProps = (state: StoreState) => {
     return {
         articles: selector(state),
-        categoryId: state.categoryId,
+        categoryId: state.category.id,
         categoryList: state.categoryList,
         categories: state.categories
     }

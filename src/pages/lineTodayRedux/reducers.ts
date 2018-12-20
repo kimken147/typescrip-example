@@ -5,15 +5,23 @@ import { Reducer } from "redux";
 export type Categories = typeof Data.result.categories;
 export type CategoryList = typeof Data.result.categoryList;
 export interface StoreState {
-    categoryId: number | string,
-    categories: Categories,
-    categoryList: CategoryList
+    categories: Categories;
+    categoryList: CategoryList;
+    isHome: boolean,
+    category: {
+        name?: string,
+        id: number | string
+    }
 }
 
 const initialState: StoreState = {
-    categoryId: Data.result.categoryList[0].id,
     categories: Data.result.categories,
-    categoryList: Data.result.categoryList.filter(item => item.type !== 3 )
+    categoryList: Data.result.categoryList.filter(item => item.type !== 3),
+    isHome: true,
+    category: {
+        id: Data.result.categoryList[0].id,
+        name: Data.result.categoryList[0].name
+    }
 };
 
 const reducers: Reducer<StoreState> = (state = initialState, actions) => {
@@ -21,7 +29,12 @@ const reducers: Reducer<StoreState> = (state = initialState, actions) => {
         case ActionTypes.SET_CATEOGORY_ID:
             return {
                 ...state,
-                categoryId: actions.categoryId
+                categoryId: actions.categoryId,
+                isHome: actions.categoryId === 100259,
+                category: {
+                    id: actions.categoryId,
+                    name: (state.categoryList.find(item => item.id === actions.categoryId) as { name: string }).name
+                }
             }
         default:
             return state;

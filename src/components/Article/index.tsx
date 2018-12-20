@@ -49,7 +49,7 @@ class Aritcle extends PureComponent<IArticle> {
             backgroundImage: `url(https://obs.line-scdn.net/${thumbnail.hash}/w${thumbnailSize}`,
             width: figure.width,
             height: figure.height
-        }}>;
+        }}>
     
         </figure>
 

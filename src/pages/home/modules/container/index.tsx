@@ -1,7 +1,10 @@
 import React, { PureComponent, lazy, Suspense } from 'react';
 import { IArticle } from "components/Article";
+import { connect } from 'react-redux';
+import { StoreState } from 'pages/lineTodayRedux';
 
 const Headline = lazy(() => import("./components/headline"));
+const SubNewsSection = lazy(() => import("./components/subNewsSection"));
 
 interface IBase {
     id: number | string,
@@ -24,14 +27,20 @@ export interface ICategory extends IBase {
     templates: Array<ITemplates>,
 }
 
-export default class Container extends PureComponent {
+interface StateProps {
+    isHome: boolean
+}
+
+class Container extends PureComponent<StateProps> {
     render() {
         return (
             <section className="container">
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Headline />
+                    {this.props.isHome ? <Headline />: <SubNewsSection />}
                 </Suspense>
             </section>
         )
     }
 }
+
+export default connect((state: StoreState): StateProps => ({isHome: state.isHome}))(Container);

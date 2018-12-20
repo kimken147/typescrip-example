@@ -35,7 +35,7 @@ class Header extends Component<Props, State> {
     state = {
         visibleList: this.props.list.slice(0, 9),
         more: this.props.list.slice(9),
-    }
+    };
 
     render() {
         const {
@@ -95,7 +95,7 @@ class Header extends Component<Props, State> {
 
 const mapStateToProps = (state: StoreState): StateProps => {
     return {
-        categoryId: state.categoryId,
+        categoryId: state.category.id,
         list: state.categoryList
     }
 };
