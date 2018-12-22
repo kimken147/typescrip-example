@@ -9,7 +9,8 @@ import { ICategory, ITemplates } from "pages/home/modules/container";
 interface IState { currentNews: ITemplates[], length: number };
 
 interface StateProps {
-    newsList: ITemplates[]
+    newsList: ITemplates[],
+    isMobile: boolean
 }
 
 class NewsSection extends PureComponent<StateProps, IState> {
@@ -29,14 +30,20 @@ class NewsSection extends PureComponent<StateProps, IState> {
                             return prev;
                         }, new Array<IArticle>());
 
-                        const main = articles.slice(0, 4);
-                        const rest = articles.slice(4);
+
+                        const count = this.props.isMobile ? 2 : 4;
+                        const main = articles.slice(0, count);
+                        const rest = articles.slice(count);
 
                         return <div className="section-block" key={news.id}>
                             <h3>{news.title}</h3>
                             <article className="news-block">
-                                {main.map((article) => <Article {...article} key={article.id} className="main" figure={{ width: "100%", height: 185 }} lazyLoad />)}
-                                {rest.map((article) => <Article {...article} key={article.id} className="sub" figure={{ width: 140, height: 96 }} lazyLoad />)}
+                                {main.map((article) => <Article {...article} key={article.id} className="main" figure={{ width: "100%", height: window.innerWidth / 4 }} lazyLoad />)}
+                                {rest.map((article) => {
+                                    const width = this.props.isMobile ? "30vw": 140;
+                                    const height = this.props.isMobile ? "20vw": 96;
+                                    return <Article {...article} key={article.id} className="sub" figure={{ width, height }} lazyLoad />
+                                })}
                             </article>
                         </div>
                     }
@@ -53,9 +60,10 @@ const selector = createSelector(
     }
 )
 
-const mapStateToProps = (state: StoreState) => {
+const mapStateToProps = (state: StoreState): StateProps => {
     return {
-        newsList: selector(state)
+        newsList: selector(state),
+        isMobile: state.isMobile
     }
 }
 

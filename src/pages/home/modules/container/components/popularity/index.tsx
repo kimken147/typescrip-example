@@ -12,6 +12,7 @@ interface StateProps {
     categoryList: CategoryList;
     categoryId: number | string;
     categories: Categories;
+    isMobile: boolean
 }
 
 interface IState {
@@ -107,11 +108,13 @@ class Popularity extends PureComponent<StateProps, IState> {
     }
 
     render() {
-        const { categoryList } = this.props;
+        const { categoryList, isMobile } = this.props;
         const { categoryId, articles } = this.state;
 
+        const style = isMobile ? { width: window.innerWidth} : {};
+
         return (
-            <aside className="popularity-container">
+            <aside className="popularity-container" style={style}>
                 <h3 className="title">熱門</h3>
                 <nav>
                     <div className="swiper">
@@ -158,12 +161,13 @@ const selector = createSelector(
     (categories, categoryId) => getArticles(categories, categoryId)
 )
 
-const mapStateToProps = (state: StoreState) => {
+const mapStateToProps = (state: StoreState): StateProps => {
     return {
         articles: selector(state),
         categoryId: state.category.id,
         categoryList: state.categoryList,
-        categories: state.categories
+        categories: state.categories,
+        isMobile: state.isMobile
     }
 };
 

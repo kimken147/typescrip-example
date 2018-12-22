@@ -1,6 +1,5 @@
-import DetectMobile from "./DetectMobile";
-
+import DetectWindowWidth from "./DetectWindowWidth";
 
 export {
-    DetectMobile
+    DetectWindowWidth
 }

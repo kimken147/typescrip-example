@@ -3,13 +3,17 @@ import Data from "models/data.json";
 import Slider from "components/Slider";
 import Article, { IArticle } from "components/Article";
 import { ICategory, ISection, ITemplates } from "pages/home/modules/container";
+import DetectWindowWidth from 'components/HOC/DetectWindowWidth';
 
-export default class Digest extends PureComponent<{}>{
+type StateProps = {
+    windowWidth: number
+}
+class Digest extends PureComponent<StateProps>{
 
     newsList: IArticle[];
-    state: Readonly<{article: IArticle}>;
+    state: Readonly<{ article: IArticle }>;
 
-    constructor(props: {}) {
+    constructor(props: StateProps) {
         super(props);
         this.newsList = (((Data.result.categories.find(item => item.id === 100259) as ICategory)
             .templates.find(item => item.type === 50) as ITemplates)
@@ -20,17 +24,18 @@ export default class Digest extends PureComponent<{}>{
     }
 
     private onSlideEnd = (index: number) => {
-        this.setState({ article: this.newsList[index]});
+        this.setState({ article: this.newsList[index] });
     }
 
     render() {
         const { article } = this.state;
+        const width = this.props.windowWidth <= 1024 ? this.props.windowWidth : 712
 
         return (
             <div className="headline-digest">
-                <Slider onSildeEnd={this.onSlideEnd}>
+                <Slider onSildeEnd={this.onSlideEnd} styles={{ width, height: width / 1.78 }}>
                     {this.newsList.map(news => {
-                        return <Article key={news.id} {...news} thumbnailSize={1200} figure={{width: "100%", height: "100%"}}/>;
+                        return <Article key={news.id} {...news} thumbnailSize={1200} figure={{ width, height: width / 1.78 }} />;
                     })}
                 </Slider>
                 <a className="digest-detail">
@@ -45,3 +50,5 @@ export default class Digest extends PureComponent<{}>{
         )
     }
 }
+
+export default DetectWindowWidth(Digest);

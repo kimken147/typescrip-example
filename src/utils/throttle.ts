@@ -1,5 +1,5 @@
 export default function (func: (...rest: any[]) => void, limit: number) {
-  let lastFunc: number | undefined;
+  let lastFunc: NodeJS.Timeout | undefined;
   let lastRan: number;
   return function () {
     const context = window;
@@ -8,7 +8,7 @@ export default function (func: (...rest: any[]) => void, limit: number) {
       func.apply(context, args)
       lastRan = Date.now()
     } else {
-      clearTimeout(lastFunc)
+      clearTimeout(lastFunc as NodeJS.Timeout)
       lastFunc = setTimeout(function () {
         if (Date.now() - lastRan >= limit) {
           func.apply(context, args)

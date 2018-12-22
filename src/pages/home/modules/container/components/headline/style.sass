@@ -38,6 +38,7 @@
 
                 .publisher
                     color: #b2b2b2
+
     .headline-section
         display: flex
         justify-content: space-between
@@ -48,3 +49,40 @@
 
         @import ./newsSection/style
         @import ../popularity/style
+
+@media screen and (max-width: 1024px)
+    .headline-container
+        width: auto
+
+        .headline-digest
+            border: 0
+            margin-top: 24px
+            display: flex
+            width: auto
+            height: auto
+            justify-content: center
+
+            .slider-wrapper
+                .item
+                    a
+                        position: relative
+
+                        .content
+                            display: flex
+                            justify-content: center
+                            width: 100%
+                            color: #fff
+                            position: absolute
+                            bottom: 40px
+
+                            span
+                                display: none
+
+            .arrow-wrapper
+                display: none
+
+            .digest-detail
+                display: none
+
+        .headline-section
+            display: block

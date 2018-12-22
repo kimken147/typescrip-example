@@ -37,7 +37,7 @@ interface IState {
     sliding: boolean;
     direction: Direction;
     prev: number;
-    interval: number | undefined;
+    interval: NodeJS.Timeout | undefined;
 }
 
 
@@ -53,8 +53,8 @@ export default class Slider extends PureComponent<IProps, IState> {
 
     static defaultProps = {
         styles: {
-            width: 712,
-            height: 400
+            width: "auto",
+            height: "100%"
         },
         time: 5000,
         arrow: {
@@ -75,11 +75,11 @@ export default class Slider extends PureComponent<IProps, IState> {
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.interval);
+        clearInterval(this.state.interval as NodeJS.Timeout);
     }
 
     resetTimer = () => {
-        clearInterval(this.state.interval);
+        clearInterval(this.state.interval as NodeJS.Timeout);
         this.setState({ interval: setInterval(this.next, this.props.time) });
     }
 

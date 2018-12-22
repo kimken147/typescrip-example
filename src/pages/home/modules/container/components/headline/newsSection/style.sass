@@ -40,6 +40,7 @@ $text-color: #b2b2b2
 
             .content
                 width: 192px
+
                 p
                     margin-bottom: 10px
                     -webkit-line-clamp: 3
@@ -47,3 +48,29 @@ $text-color: #b2b2b2
 
                 span
                     +publisher-style
+
+@media screen and (max-width: 1024px)
+    .headline-news-section
+        width: auto
+        padding: 0 10px
+
+        .news-block
+            .news
+                width: 100%
+
+                .content
+                    p
+                        display: -webkit-box
+                        -webkit-line-clamp: 3
+                        -webkit-box-orient: vertical
+                        overflow: hidden
+
+            .main
+                width: 100%
+                flex: 1
+
+                &:nth-of-type(1)
+                    margin-right: 10px
+            .sub
+                .content
+                    width: 65vw

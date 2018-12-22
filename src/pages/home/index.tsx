@@ -50,5 +50,10 @@ const HomeOuter = () => {
     )
 }
 
-
 ReactDOM.render(<HomeOuter />, document.getElementById("home"));
+
+if (module.hot) {
+    module.hot.accept("pages/home", () => {
+        ReactDOM.render(<HomeOuter />, document.getElementById("home"));
+    })
+}

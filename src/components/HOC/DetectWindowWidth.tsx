@@ -3,7 +3,7 @@ import { Subtract } from "utility-types";
 import Throttle from "utils/throttle";
 
 interface InjectedProps {
-    isMobile: boolean
+    windowWidth: number
 }
 
 export default <WrappedProps extends InjectedProps>(
@@ -11,28 +11,29 @@ export default <WrappedProps extends InjectedProps>(
 ) => {
     type HocProps = Subtract<WrappedProps, InjectedProps>;
     type HocState = {
-        readonly isMobile: boolean;
+        readonly width: number;
     }
     return class DetectMobile extends React.Component<HocProps, HocState> {
         state: HocState = {
-            isMobile: window.innerWidth <= 1024
+            width: window.innerWidth
         };
 
         componentDidMount() {
-            window.addEventListener("resize", Throttle((e: UIEvent) => {
-                if (window.innerWidth <= 1024) {
-                    this.setState({ isMobile: true });
-                }
-                else {
-                    this.setState({ isMobile: false})
-                }
-            }, 100));
+            window.addEventListener("resize", this.onResize);
         }
+
+        componentWillUnmount() {
+            window.removeEventListener("resize", this.onResize);
+        }
+
+        onResize = Throttle(() => {
+            this.setState({ width: window.innerWidth });
+        }, 100)
 
         render() {
             const { ...restProps } = this.props as {};
-            const { isMobile } = this.state;
-            return <WrappedComponent {...restProps} isMobile={isMobile} />
+            const { width } = this.state;
+            return <WrappedComponent {...restProps} windowWidth={width} />
         }
     }
 }
