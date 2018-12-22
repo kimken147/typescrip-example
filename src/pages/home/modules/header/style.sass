@@ -33,13 +33,14 @@ header.top-header
 
                 &.active, &:hover
                     color: #fff
+
         .more
             color: grey
             font-size: 16px
             padding: 0
             margin: 0 10px
             height: 100%
-            
+
             &:hover
                 color: #fff
 
@@ -53,3 +54,24 @@ header.top-header
 
                     &:hover
                         color: #fff
+
+header.mobile-header
+    .logo
+        display: flex
+        justify-content: center
+        margin: 10px 0
+
+    .nav-items
+        overflow: hidden
+        padding: 0 10px
+
+        .moveable-wrapper
+            display: flex
+
+        li
+            margin: 0 10px
+            word-break: keep-all
+            padding: 10px 0
+
+            &.active
+                border-bottom: 1px solid

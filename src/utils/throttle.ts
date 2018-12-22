@@ -1,4 +1,4 @@
-export function throttle(func: (...rest: any[]) => void, limit: number) {
+export default function (func: (...rest: any[]) => void, limit: number) {
   let lastFunc: number | undefined;
   let lastRan: number;
   return function () {

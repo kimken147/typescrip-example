@@ -1,30 +1,54 @@
 import "./style.sass";
 import Data from "models/data.json";
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment, lazy, Suspense } from 'react';
 import ReactDOM from "react-dom";
 
 import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import Reducers from "pages/lineTodayRedux/reducers";
+import { StoreState } from "pages/lineTodayRedux";
 
-import Header from "./modules/header";
 import Container from "./modules/container";
+import MobileDetector from "./mobileDetector";
 
-export type CategoryIdType = number | string;
+const PCHeader = lazy(() => import("./modules/header/PCHeader"));
+const MobileHeader = lazy(() => import("./modules/header/mobileHeader"));
 
-const store = createStore(Reducers, (window as any).devToolsExtension ? (window as any).devToolsExtension(): () => {});
+type StateProps = {
+    isMobile: boolean
+}
+
+const store = createStore(Reducers, (window as any).devToolsExtension ? (window as any).devToolsExtension() : () => { });
 
 console.log(Data);
-class Home extends PureComponent {
+class Home extends PureComponent<StateProps> {
     render() {
         return (
-            <Provider store={store}>
-                <Header />
+            <Fragment>
+                <Suspense fallback={<div>Loading...</div>}>
+                    {this.props.isMobile ? <MobileHeader /> : <PCHeader />}
+                </Suspense>
                 <Container />
-            </Provider>
+            </Fragment>
         )
     }
 }
 
-ReactDOM.render(<Home />, document.getElementById("home"));
+const Wrapped = connect((state: StoreState) => {
+    return {
+        isMobile: state.isMobile
+    }
+})(Home);
+
+const HomeOuter = () => {
+    return (
+        <Provider store={store}>
+            <Wrapped />
+            <MobileDetector />
+        </Provider>
+    )
+}
+
+
+ReactDOM.render(<HomeOuter />, document.getElementById("home"));

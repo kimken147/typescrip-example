@@ -4,6 +4,7 @@ import { Reducer } from "redux";
 
 export type Categories = typeof Data.result.categories;
 export type CategoryList = typeof Data.result.categoryList;
+export type CategoryIdType = number | string;
 export interface StoreState {
     categories: Categories;
     categoryList: CategoryList;
@@ -11,7 +12,8 @@ export interface StoreState {
     category: {
         name?: string,
         id: number | string
-    }
+    },
+    isMobile: boolean
 }
 
 const initialState: StoreState = {
@@ -21,7 +23,8 @@ const initialState: StoreState = {
     category: {
         id: Data.result.categoryList[0].id,
         name: Data.result.categoryList[0].name
-    }
+    },
+    isMobile: window.innerWidth <= 1024
 };
 
 const reducers: Reducer<StoreState> = (state = initialState, actions) => {
@@ -35,6 +38,11 @@ const reducers: Reducer<StoreState> = (state = initialState, actions) => {
                     id: actions.categoryId,
                     name: (state.categoryList.find(item => item.id === actions.categoryId) as { name: string }).name
                 }
+            }
+        case ActionTypes.SET_ISMOBILE:
+            return {
+                ...state,
+                isMobile: actions.isMobile
             }
         default:
             return state;

@@ -15,11 +15,6 @@ interface StateProps {
 }
 
 class SubNewsSection extends PureComponent<StateProps> {
-
-    componentDidMount() {
-        console.log(this.props.otherNews);
-    }
-
     render() {
         const { cateogoryName, digest } = this.props;
         return (
