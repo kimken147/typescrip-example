@@ -38,10 +38,10 @@ class NewsSection extends PureComponent<StateProps, IState> {
                         return <div className="section-block" key={news.id}>
                             <h3>{news.title}</h3>
                             <article className="news-block">
-                                {main.map((article) => <Article {...article} key={article.id} className="main" figure={{ width: "100%", height: window.innerWidth / 4 }} lazyLoad />)}
+                                {main.map((article) => <Article {...article} key={article.id} className="main" figure={{ width: "100%", height: this.props.isMobile ? window.innerWidth / 4 : 185 }} lazyLoad />)}
                                 {rest.map((article) => {
-                                    const width = this.props.isMobile ? "30vw": 140;
-                                    const height = this.props.isMobile ? "20vw": 96;
+                                    const width = this.props.isMobile ? "30vw" : 140;
+                                    const height = this.props.isMobile ? "20vw" : 96;
                                     return <Article {...article} key={article.id} className="sub" figure={{ width, height }} lazyLoad />
                                 })}
                             </article>
