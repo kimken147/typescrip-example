@@ -1,7 +1,7 @@
 # LineToday Project (typescript + react + redux)
 I design it to a single page application because there are many DOMs are not necessary to be changed when routing to other pages. I use typescript this time because I would
 
-## § Install
+## Install
 ```
 npm install
 ```
@@ -10,7 +10,7 @@ Or
 yarn install
 ```
 
-## § Execute project command
+## Execute project command
 Development mode with webpack-dev-server
 ```
 yarn start
@@ -54,19 +54,20 @@ Extract some components to be public, then it can be reused.
 
 * Button
 * Ariticle
-     All news of page. Can change its styles in each modules.
+All news of page. Can change its styles in each modules.
 * PopupList
-     A public list that attach to a component or DOM, ex: dropdown
+A public list that attach to a component or DOM, ex: dropdown
 * Slider
 
 ## Pages
 ### Home
 there is only one page in this project. When route to the other category of news, it only re-render essential parts of dom.
-I module its structure to three components:
-    - header
-    Control navigation. It can scroll or drag in mobile mode.
-    - container
-    Present corresponding news of category and public news list.  I use react-lazyload on images let the efficacy of loading will be raise.
+I module its structure to three components
+
+* header
+Control navigation. It can scroll or drag in mobile mode.
+* container
+Present corresponding news of category and public news list.  I use react-lazyload on images let the efficacy of loading will be raise.
 
 ## RWD design
 Every components in this project will change its styles to mobile styles if the screen width is less than 1024px
