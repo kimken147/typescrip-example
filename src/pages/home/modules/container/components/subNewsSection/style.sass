@@ -15,10 +15,6 @@
         .digest
             position: relative
 
-            figure
-                height: 400px
-                width: 712px
-
             .content
                 position: absolute
                 width: 712px
@@ -79,3 +75,28 @@
 
     .popularity-container
         margin-top: 82px
+
+@media screen and (max-width: 1024px)
+    .sub-news-outter
+        display: block
+        width: 100%
+
+        .news-section
+            width: 100%
+
+            h1
+                display: none
+
+            .digest
+                .content
+                    width: auto
+
+                &:after
+                    width: 100%
+
+            .subpage-news
+                align-items: flex-start
+                padding: 0 15px
+
+            .news-section-title
+                padding: 0 15px

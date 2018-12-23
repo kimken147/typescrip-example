@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment as div } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect'
-;
+    ;
 import { StoreState } from 'pages/lineTodayRedux';
 import { ICategory, ITemplates, ISection } from 'pages/home/modules/container';
 import Article from "components/Article";
@@ -11,22 +11,27 @@ import Popularity from "../popularity";
 interface StateProps {
     digest: ISection[],
     otherNews: ITemplates[],
-    cateogoryName: string | undefined
+    cateogoryName: string | undefined,
+    isMobile: boolean
 }
 
 class SubNewsSection extends PureComponent<StateProps> {
     render() {
-        const { cateogoryName, digest } = this.props;
+        const { cateogoryName, digest, isMobile } = this.props;
+
+        const digestFigureStyle = isMobile ? { width: window.innerWidth, height: window.innerWidth / 1.78 } : { width: 712, height: 400 };
+        const figureStyle = isMobile ? { width: "30vw", height: "20vw"} : { width: 252, height: 148 }
+
         return (
             <div className="sub-news-outter">
                 <section className="news-section">
                     <h1>{cateogoryName}</h1>
                     <div className="digest">
-                        <Article {...(digest.find(item => item.type === 1) as ISection).articles[0]} figure={{ width: 712, height: 400 }} />
+                        <Article {...(digest.find(item => item.type === 1) as ISection).articles[0]} figure={digestFigureStyle} />
                     </div>
                     <div className="sub-digest">
                         {(digest.find(item => item.type === 3) as ISection).articles.map(item => {
-                            return <Article {...item} key={item.id} className="subpage-news" figure={{ width: 252, height: 148 }} />
+                            return <Article {...item} key={item.id} className="subpage-news" figure={figureStyle} />
                         })}
                     </div>
                     <div className="other-news">
@@ -36,7 +41,7 @@ class SubNewsSection extends PureComponent<StateProps> {
                                     <div key={news.id} className="news-section-block">
                                         <h3 className="news-section-title">{news.title}</h3>
                                         {(news.sections[0] as ISection).articles.map(article => {
-                                            return <Article {...article} key={article.id} className="subpage-news" figure={{width: 252, height: 148}} lazyLoad/>;
+                                            return <Article {...article} key={article.id} className="subpage-news" figure={figureStyle} lazyLoad />;
                                         })}
                                     </div>
                                 )
@@ -72,5 +77,6 @@ const otherNewsSelector = createSelector(
 export default connect((state: StoreState): StateProps => ({
     digest: digestSelector(state),
     otherNews: otherNewsSelector(state),
-    cateogoryName: state.category.name
+    cateogoryName: state.category.name,
+    isMobile: state.isMobile
 }))(SubNewsSection)
