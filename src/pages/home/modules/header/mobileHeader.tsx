@@ -48,39 +48,39 @@ class MobileHeader extends Component<Props, State> {
     }
 
     onTouchStart = (e: TouchEvent) => {
-        this.setState({
-            coordinateX: e.touches[0].clientX,
-        });
+        // this.setState({
+        //     coordinateX: e.touches[0].clientX,
+        // });
     }
 
     onTouchMove = (e: TouchEvent) => {
-        const { clientX } = e.touches[0];
-        this.setState(({ coordinateX }) => {
-            return {
-                distance: clientX - coordinateX
-            }
-        })
+        // const { clientX } = e.touches[0];
+        // this.setState(({ coordinateX }) => {
+        //     return {
+        //         distance: clientX - coordinateX
+        //     }
+        // })
     }
 
     onTouchEnd = () => {
-        this.setState(({ currentX: $currentX, distance }) => {
-            const current = $currentX + distance;
-            const isOverLeftBound = current > 0;
-            const isOverRightBound = current < -this.navWidth;
-            let currentX: number = current;
+        // this.setState(({ currentX: $currentX, distance }) => {
+        //     const current = $currentX + distance;
+        //     const isOverLeftBound = current > 0;
+        //     const isOverRightBound = current < -this.navWidth;
+        //     let currentX: number = current;
 
-            if (isOverLeftBound) {
-                currentX = 0;
-            }
-            else if (isOverRightBound) {
-                currentX = -this.navWidth;
-            }
-            return {
-                currentX,
-                distance: 0,
-                duration: isOverLeftBound || isOverRightBound ? 600 : 0
-            }
-        });
+        //     if (isOverLeftBound) {
+        //         currentX = 0;
+        //     }
+        //     else if (isOverRightBound) {
+        //         currentX = -this.navWidth;
+        //     }
+        //     return {
+        //         currentX,
+        //         distance: 0,
+        //         duration: isOverLeftBound || isOverRightBound ? 600 : 0
+        //     }
+        // });
     }
 
     onTransitionEnd = () => {
@@ -93,9 +93,9 @@ class MobileHeader extends Component<Props, State> {
         const {
             state: {
                 visibleList,
-                distance,
-                currentX,
-                duration
+                // distance,
+                // currentX,
+                // duration
             },
             props: {
                 categoryId
@@ -113,14 +113,15 @@ class MobileHeader extends Component<Props, State> {
                             className="nav-items">
                             <ul className="moveable-wrapper"
                                 ref={this.navDOM}
-                                style={{
-                                    transform: `translateX(${currentX + distance}px)`,
-                                    transitionDuration: `${duration}ms`
-                                }}
-                                onTouchStart={this.onTouchStart}
-                                onTouchMove={this.onTouchMove}
-                                onTouchEnd={this.onTouchEnd}
-                                onTransitionEnd={this.onTransitionEnd}>
+                                // style={{
+                                //     transform: `translateX(${currentX + distance}px)`,
+                                //     transitionDuration: `${duration}ms`
+                                // }}
+                                // onTouchStart={this.onTouchStart}
+                                // onTouchMove={this.onTouchMove}
+                                // onTouchEnd={this.onTouchEnd}
+                                // onTransitionEnd={this.onTransitionEnd}
+                                >
 
                                 {visibleList.map((category) => {
                                     return (

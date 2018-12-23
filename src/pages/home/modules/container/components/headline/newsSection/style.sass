@@ -1,3 +1,5 @@
+@import "~assets/styles/mixins"
+
 $text-color: #b2b2b2
 
 =publisher-style
@@ -44,7 +46,10 @@ $text-color: #b2b2b2
                 p
                     margin-bottom: 10px
                     -webkit-line-clamp: 3
+                    -webkit-box-orient: vertical
                     line-height: 1.25
+                    display: -webkit-box
+                    overflow: hidden
 
                 span
                     +publisher-style
@@ -54,23 +59,41 @@ $text-color: #b2b2b2
         width: auto
         padding: 0 10px
 
-        .news-block
-            .news
-                width: 100%
+        .section-block
+            .news-block
+                .news
+                    width: 100%
 
-                .content
-                    p
-                        display: -webkit-box
-                        -webkit-line-clamp: 3
-                        -webkit-box-orient: vertical
-                        overflow: hidden
+                .main
+                    width: 100%
+                    flex: 1
 
-            .main
-                width: 100%
-                flex: 1
+                    &:nth-of-type(1)
+                        margin-right: 10px
 
-                &:nth-of-type(1)
-                    margin-right: 10px
-            .sub
-                .content
-                    width: 65vw
+                .sub
+                    .content
+                        width: 65vw
+
+            &:nth-of-type(1)
+                .news-block
+                    flex-wrap: nowrap
+                    overflow-x: scroll
+                    
+                    +hide-scrollbar
+
+                    .news
+                        padding: 0 5px
+                        display: block
+
+                        figure
+                            width: 30vw !important
+                            height: 20vw !important
+                            margin: 0
+
+                        .content
+                            width: 100%
+
+                            p
+                                margin: 10px 0 5px
+                                -webkit-line-clamp: 2

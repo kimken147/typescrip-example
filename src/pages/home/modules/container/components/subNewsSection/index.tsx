@@ -20,7 +20,7 @@ class SubNewsSection extends PureComponent<StateProps> {
         const { cateogoryName, digest, isMobile } = this.props;
 
         const digestFigureStyle = isMobile ? { width: window.innerWidth, height: window.innerWidth / 1.78 } : { width: 712, height: 400 };
-        const figureStyle = isMobile ? { width: "30vw", height: "20vw"} : { width: 252, height: 148 }
+        const figureStyle = isMobile ? { width: "30vw", height: "20vw" } : { width: 252, height: 148 }
 
         return (
             <div className="sub-news-outter">
@@ -40,9 +40,11 @@ class SubNewsSection extends PureComponent<StateProps> {
                                 return (
                                     <div key={news.id} className="news-section-block">
                                         <h3 className="news-section-title">{news.title}</h3>
-                                        {(news.sections[0] as ISection).articles.map(article => {
-                                            return <Article {...article} key={article.id} className="subpage-news" figure={figureStyle} lazyLoad />;
-                                        })}
+                                        <div className="news-wrapper">
+                                            {(news.sections[0] as ISection).articles.map(article => {
+                                                return <Article {...article} key={article.id} className="subpage-news" figure={figureStyle} lazyLoad />;
+                                            })}
+                                        </div>
                                     </div>
                                 )
                             }

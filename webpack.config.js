@@ -23,7 +23,7 @@ module.exports = (env, options) => {
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.json', 'sass', 'css', 'scss'],
-            modules: ["node_modules", "src", "pages", "components", "models"]
+            modules: ["node_modules", "src", "pages", "components", "models", "assets"]
         },
         plugins: [
             new CleanWebpackPlugin(['dist']),
