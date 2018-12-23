@@ -10,14 +10,13 @@ const resolve = ($path) => {
 
 module.exports = (env, options) => {
     const devMode = options.mode !== "production";
-    console.warn("------", options.mode);
     return {
         entry: {
             "common-styles": resolve("src/assets/styles/index.sass"),
             home: resolve("src/pages/home/index.tsx")
         },
         output: {
-            path: path.resolve(__dirname, "dist"),
+            path: path.resolve(__dirname, "demo"),
             filename: "scripts/[name].js",
             chunkFilename: "scripts/[name].[id].css"
         },
@@ -26,13 +25,14 @@ module.exports = (env, options) => {
             modules: ["node_modules", "src", "pages", "components", "models", "assets"]
         },
         plugins: [
-            new CleanWebpackPlugin(['dist']),
+            new CleanWebpackPlugin(['demo']),
             new MiniCssExtractPlugin({
                 filename: devMode ? "assets/styles/[name].css" : "assets/styles/[name].[hash].css"
             }),
             new HtmlWebpackPlugin({
                 filename: "home.html",
                 template: path.resolve(__dirname, 'src/pages/home/index.html'),
+                minify: !devMode
             }),
             new webpack.HotModuleReplacementPlugin()
         ],
@@ -45,8 +45,11 @@ module.exports = (env, options) => {
                     ],
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-react'],
-                        plugins: ['@babel/plugin-proposal-class-properties']
+                        presets: [["@babel/preset-env", {
+                            //foceAllTransforms: !devMode
+                        }], '@babel/preset-react'],
+                        plugins: ['@babel/plugin-proposal-class-properties'],
+                        babelrc: false
                     }
                 }, {
                     test: /\.(sa|sc|c)ss$/,
@@ -105,6 +108,6 @@ module.exports = (env, options) => {
             hot: true
         },
         // 启用sourceMap
-        devtool: "source-map",
+        devtool: devMode ? "source-map" : "",
     }
 }

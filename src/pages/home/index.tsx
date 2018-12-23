@@ -19,7 +19,7 @@ type StateProps = {
     isMobile: boolean
 }
 
-const store = createStore(Reducers, (window as any).devToolsExtension ? (window as any).devToolsExtension() : () => { });
+const store = createStore(Reducers, (window as any).devToolsExtension ? (window as any).devToolsExtension() : (f: any) => f);
 
 console.log(Data);
 class Home extends PureComponent<StateProps> {
